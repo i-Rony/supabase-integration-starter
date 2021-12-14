@@ -1,6 +1,6 @@
-# Expo Starter kit
+# Internship Starter 
 
-This starter kit runs on Expo and has 5 basic free screens. To quickly get started, simply do:
+This kit runs on Expo and has 5 basic free screens. To quickly get started, simply do:
 
 - `yarn`
 - `yarn start`
