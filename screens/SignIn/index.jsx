@@ -23,11 +23,37 @@ import IconGoogle from "./components/IconGoogle";
 import IconFacebook from "./components/IconFacebook";
 import FloatingLabelInput from "./components/FloatingLabelInput";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+import { supabase } from "../../supabaseClient";
+
 export function SignInForm({ props }) {
   // const router = useRouter(); //use incase of Nextjs
   const [text, setText] = useState("");
   const [pass, setPass] = useState("");
   const [showPass, setShowPass] = React.useState(false);
+
+  const [loggedIn, setLogin] = useState(false);
+
+  const logInUser = async(text, pass) => {
+		if(text != '' && pass != ''){
+			try{
+        const { user, session, error } = await supabase.auth.signIn({
+          email: text,
+          password: pass,
+        })			
+        console.log(user, session, error);
+				setLogin(true);
+        props.navigation.navigate("OTP");
+			} catch(error){
+				console.log(error);
+				setLogin(false)
+				alert('Invalid Username or Password');
+			}
+		} else {
+			alert('Invalid Username or Password');
+		}
+	}
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{
@@ -187,7 +213,7 @@ export function SignInForm({ props }) {
                   bg: "primary.700",
                 }}
                 onPress={() => {
-                  props.navigation.navigate("OTP");
+                  logInUser(text, pass)
                 }}
               >
                 SIGN IN
